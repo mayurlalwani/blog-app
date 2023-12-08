@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
@@ -13,6 +15,7 @@ const LoginPage: React.FC = () => {
         password,
       });
       setNotification('Login successful!');
+      router.push('/blog/new');
     } catch (error: any) {
       setNotification('Invalid email or password. Please try again.');
     }
