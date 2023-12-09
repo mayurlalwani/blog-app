@@ -1,30 +1,48 @@
 import axios from 'axios';
 import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const CreateBlogPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imagePath, setImagePath] = useState('');
+  const [notification, setNotification] = useState<string | null>(null);
+
   const Editor = dynamic(() => import('./CKEditor'), { ssr: false });
 
   const handleCreateBlog = async () => {
     const userId = localStorage.getItem('userId');
-    await axios.post('/api/create-blog', {
-      userId,
-      title,
-      description,
-      image: imagePath,
-    });
+    try {
+      await axios.post('/api/create-blog', {
+        userId,
+        title,
+        description,
+        image: imagePath,
+      });
+      setDescription('');
+      setTitle('');
+      setNotification('Blog created successfully!');
+    } catch (error) {
+      setNotification('Some error occured!');
+    }
   };
 
   const handleContentChange = (newContent: string) => {
     setDescription(newContent);
   };
 
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
   return (
     <div className='flex flex-col items-center justify-center bg-gray-100 h-screen'>
-      <h1>Create Blog</h1>
       <form
         className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-full w-full'
         encType='multipart/form-data'
@@ -63,6 +81,11 @@ const CreateBlogPage: React.FC = () => {
           </button>
         </div>
       </form>
+      {notification && (
+        <div className='bg-green-500 text-white p-4 rounded absolute bottom-4 left-4 right-4'>
+          {notification}
+        </div>
+      )}
     </div>
   );
 };

@@ -21,6 +21,8 @@ const BlogList = ({ blogs }: BlogListProps) => {
             <Image
               src={blog.image}
               alt={`Image for ${blog.title}`}
+              width={500}
+              height={500}
               className='mb-4 rounded-lg w-full h-40 object-cover'
             />
           )}
