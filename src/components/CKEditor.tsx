@@ -7,12 +7,14 @@ const CKEditorWrapper: React.FC<{
   description: string;
   setImagePath: (path: string) => void;
 }> = ({ onChange, description, setImagePath }) => {
-  const [editor, setEditor] = useState(null);
+  const [editor, setEditor] = useState<any>();
   const [editorData, setEditorData] = useState(description);
 
   useEffect(() => {
     if (editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      (editor as any).plugins.get('FileRepository').createUploadAdapter = (
+        loader: any
+      ) => {
         return {
           async upload() {
             const data = new FormData();
@@ -32,7 +34,7 @@ const CKEditorWrapper: React.FC<{
         };
       };
     }
-  }, [editor]);
+  }, [editor, setImagePath]);
 
   return (
     <CKEditor

@@ -19,7 +19,7 @@ export async function getServerSideProps(context: any) {
   const data = context.req.headers.cookie
     ? context.req.headers.cookie
         .split('; ')
-        .find((row) => row.startsWith('userId='))
+        .find((row: any) => row.startsWith('userId='))
     : null;
   try {
     const userId = data ? data.split('=')[1] : null;

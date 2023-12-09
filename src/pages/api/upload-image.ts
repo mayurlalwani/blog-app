@@ -26,14 +26,14 @@ export const config = {
   },
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    upload.single('file')(req, res, async (err: any) => {
+    upload.single('file')(req as any, res as any, async (err: any) => {
       if (err) {
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
-      const file = req.file as Express.Multer.File;
+      const file = (req as any).file as Express.Multer.File;
       const imagePath = `/uploads/${file.filename}`;
 
       return res.status(200).json({ path: imagePath });
@@ -43,3 +43,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+export default handler;

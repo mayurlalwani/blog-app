@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface Blog {
   _id: string;
   userId: string;
@@ -16,7 +18,7 @@ const BlogList = ({ blogs }: BlogListProps) => {
       {blogs.map((blog) => (
         <div key={blog._id} className='bg-white p-6 rounded-lg shadow-md'>
           {blog.image && (
-            <img
+            <Image
               src={blog.image}
               alt={`Image for ${blog.title}`}
               className='mb-4 rounded-lg w-full h-40 object-cover'
