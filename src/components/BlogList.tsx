@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface Blog {
   _id: string;
@@ -13,6 +14,7 @@ interface BlogListProps {
 }
 
 const BlogList = ({ blogs }: BlogListProps) => {
+  const router = useRouter();
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
       {blogs.length === 0 && (
@@ -22,7 +24,11 @@ const BlogList = ({ blogs }: BlogListProps) => {
         </div>
       )}
       {blogs.map((blog) => (
-        <div key={blog._id} className='bg-white p-6 rounded-lg shadow-md'>
+        <div
+          key={blog._id}
+          className='bg-white p-6 rounded-lg shadow-md cursor-pointer'
+          onClick={() => router.push(`/blog/${blog._id}`)}
+        >
           {blog.image && (
             <Image
               src={blog.image}

@@ -1,9 +1,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
   const router = useRouter();
+  const [userId, setUserId] = useState('');
 
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      router.push('/');
+    } else {
+      setUserId(userId);
+    }
+  }, []);
   const handleLogout = async () => {
     localStorage.removeItem('userId');
     document.cookie = '';
@@ -21,9 +31,11 @@ const Header = () => {
         </div>
       </div>
       <div>
-        <span onClick={handleLogout} className='ml-10 mr-10'>
-          Logout
-        </span>
+        {userId !== '' && (
+          <span onClick={handleLogout} className='ml-10 mr-10 cursor-pointer'>
+            Logout
+          </span>
+        )}
       </div>
     </header>
   );
