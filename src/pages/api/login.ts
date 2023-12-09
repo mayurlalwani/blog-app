@@ -29,7 +29,9 @@ export default async function handler(
         return res.status(401).json({ error: 'Invalid email or password' });
       }
 
-      return res.status(200).json({ message: 'Login successful' });
+      return res
+        .status(200)
+        .json({ userId: user._id, message: 'Login successful' });
     } catch (error: any) {
       console.error('Error logging in:', error.message);
       return res.status(500).json({ error: 'Internal Server Error' });

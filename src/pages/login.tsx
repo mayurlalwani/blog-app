@@ -15,6 +15,8 @@ const LoginPage: React.FC = () => {
         password,
       });
       setNotification('Login successful!');
+      localStorage.setItem('userId', response.data.userId);
+      document.cookie = 'userId=' + response.data.userId;
       router.push('/blog/new');
     } catch (error: any) {
       setNotification('Invalid email or password. Please try again.');

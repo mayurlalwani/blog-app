@@ -9,7 +9,9 @@ const CreateBlogPage: React.FC = () => {
   const Editor = dynamic(() => import('./CKEditor'), { ssr: false });
 
   const handleCreateBlog = async () => {
+    const userId = localStorage.getItem('userId');
     await axios.post('/api/create-blog', {
+      userId,
       title,
       description,
       image: imagePath,
@@ -21,10 +23,10 @@ const CreateBlogPage: React.FC = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
+    <div className='flex flex-col items-center justify-center bg-gray-100 h-screen'>
       <h1>Create Blog</h1>
       <form
-        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 h-full w-full'
         encType='multipart/form-data'
         action='/api/upload-image'
         method='post'

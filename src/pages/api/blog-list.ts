@@ -5,25 +5,16 @@ import Blog from '@/backend/models/Blog';
 connectToDatabase();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'POST') {
+  if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const { title, description, image, userId } = req.body;
-
   try {
-    const blog = new Blog({
-      userId,
-      title,
-      description,
-      image,
-    });
+    const blogs = await Blog.find({ userId: req.query.userId });
 
-    await blog.save();
-
-    return res.status(201).json({ message: 'Blog created successfully' });
+    return res.status(201).json({ blogs });
   } catch (error) {
-    console.error('Error creating blog:', error);
+    console.log({ error });
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
