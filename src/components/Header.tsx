@@ -12,6 +12,11 @@ const Header = () => {
           <Link href='/blog/list'>All blogs</Link>
         </div>
       </div>
+      <div>
+        <Link className='ml-10 mr-10' href='/'>
+          Logout
+        </Link>
+      </div>
     </header>
   );
 };

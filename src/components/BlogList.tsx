@@ -15,6 +15,12 @@ interface BlogListProps {
 const BlogList = ({ blogs }: BlogListProps) => {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+      {blogs.length === 0 && (
+        <div className='bg-white p-6 rounded-lg shadow-md'>
+          <h2 className='text-xl font-bold mb-2'>No blogs found</h2>
+          <p>Try creating a blog</p>
+        </div>
+      )}
       {blogs.map((blog) => (
         <div key={blog._id} className='bg-white p-6 rounded-lg shadow-md'>
           {blog.image && (
