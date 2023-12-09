@@ -30,6 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     upload.single('file')(req as any, res as any, async (err: any) => {
       if (err) {
+        console.log('Error uploading file:', err);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
