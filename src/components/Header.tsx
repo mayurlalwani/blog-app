@@ -1,6 +1,14 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    localStorage.removeItem('userId');
+    document.cookie = '';
+    router.push('/');
+  };
   return (
     <header className='bg-gray-800 text-white p-4 flex justify-between items-center'>
       <div className='flex items-center'>
@@ -13,9 +21,9 @@ const Header = () => {
         </div>
       </div>
       <div>
-        <Link className='ml-10 mr-10' href='/'>
+        <span onClick={handleLogout} className='ml-10 mr-10'>
           Logout
-        </Link>
+        </span>
       </div>
     </header>
   );
