@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
 
-const uploadDirectory = './public/uploads/';
+const uploadDirectory = './public/assets/';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,7 +35,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       const file = (req as any).file as Express.Multer.File;
-      const imagePath = `/uploads/${file.filename}`;
+      // const imagePath = `/uploads/${file.filename}`;
+      const imagePath = `/assets/${file.filename}`;
 
       return res.status(200).json({ path: imagePath });
     });
